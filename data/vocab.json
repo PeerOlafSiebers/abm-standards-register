@@ -1,0 +1,46 @@
+{
+  "Primary Function": [
+    "Archive & share",
+    "Describe model",
+    "Design experiments",
+    "Document data use",
+    "Document process",
+    "Evaluate & validate",
+    "Govern publication"
+  ],
+  "Primary Domain": [
+    "Climate Science",
+    "Computer Science",
+    "Data Science",
+    "Ecology",
+    "Economics",
+    "General Science",
+    "Health Economics",
+    "Health/Medical Science",
+    "Land Use Science",
+    "Multi-Agent Systems",
+    "Operations Research (OR)",
+    "Social Simulation",
+    "System Dynamics",
+    "Systems Biology"
+  ],
+  "prefixes": {
+    "Verification Status": [
+      "Verified",
+      "Carried over",
+      "Added by expert review",
+      "FIXED"
+    ],
+    "Machine-Readable": [
+      "Yes",
+      "Partial",
+      "No"
+    ],
+    "GenAI / LLM Status": [
+      "Pre-dates GenAI",
+      "Addresses AI/ML",
+      "Uses GenAI",
+      "Hosts GenAI"
+    ]
+  }
+}

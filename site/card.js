@@ -1,0 +1,13 @@
+// Renders one standard card. Needs globals: D (all records), BY (id -> record).
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function card(r){const doi=(String(r.ref).match(/https?:\/\/\S+/)||[])[0]||'';const rel=esc(r.rel).replace(/SR-\d{3}/g,m=>BY[m]?`<button class="lk" data-id="${m}">${m} · ${esc(BY[m].short)}</button>`:m);
+const sim=D.filter(o=>o.id!==r.id).map(o=>({o,s:(o.dom===r.dom)*2+(o.fn===r.fn)*2+(o.type===r.type)+(o.method===r.method)})).filter(a=>a.s>=3).sort((a,b)=>b.s-a.s||b.o.cn-a.o.cn).slice(0,4);
+const life=String(r.life).split(';').map(s=>`<span class="bd">${esc(s.trim())}</span>`).join('');
+return`<article class="card"><div class="ch"><span class="id mt">${r.id}</span><h2>${esc(r.short)}</h2><p class="nm">${esc(r.name)}</p><span class="bd dom">${esc(r.type)}</span><span class="bd">${esc(r.fn)}</span><span class="bd dom">${esc(r.dom)}</span><span class="bd ${r.b}">${r.b}</span>${r.m!=='No'?`<span class="bd ${r.m}">machine-readable: ${r.m}</span>`:''}</div>
+<div class="vb ${r.v}"><b>${r.v==='Verified'?'✓ Verified':'⚠ '+r.v}</b> · ${esc(r.vs)} · provenance: ${esc(r.prov)}</div>
+<div class="cb"><div class="cm"><h4>Summary</h4><p>${esc(r.desc)}</p><h4>What it does not cover</h4><p>${esc(r.excl)}</p><h4>Binding status</h4><p>${esc(r.bind)}</p><h4>Relationships</h4><p>${rel}</p>
+<h4>Links</h4>${r.url?`<a class="btn" href="${esc(r.url)}" target="_blank" rel="noopener">Canonical resource ↗</a>`:'<span class="mt">No canonical URL recorded</span>'}${doi&&doi!==r.url?`<a class="btn o" href="${esc(doi.replace(/[.,]$/,''))}" target="_blank" rel="noopener">DOI / paper ↗</a>`:''}
+<h4>Real-world use cases</h4>${r.usecases?`<p>${esc(r.usecases)}</p>`:'<div class="todo">Placeholder: 2–3 published applications and a citations-vs-use sample will appear here once the register’s TODO columns are filled.</div>'}
+<h4>Cite this entry</h4><div class="ref">${esc(r.ref)}</div>
+${sim.length?`<h4>More like this</h4><div class="sim">${sim.map(a=>`<button class="lk" data-id="${a.o.id}">${esc(a.o.short)}</button>`).join('')}</div>`:''}</div>
+<aside class="ca"><h4>Metadata</h4><dl><dt>First published</dt><dd>${r.year}</dd><dt>Latest version</dt><dd>${esc(r.ver)}</dd><dt>Other domains</dt><dd>${esc(r.other)}</dd><dt>Method focus</dt><dd>${esc(r.method)}</dd><dt>Lifecycle coverage</dt><dd>${life}</dd><dt>Data type</dt><dd>${esc(r.data||'–')}</dd><dt>Machine-readable</dt><dd>${esc(r.mr)}</dd><dt>GenAI / LLM status</dt><dd>${esc(r.genai)}</dd><dt>Citations</dt><dd>${esc(r.cites||'–')}<br><span class="mt">${esc(r.csrc)}</span></dd></dl></aside></div></article>`}
